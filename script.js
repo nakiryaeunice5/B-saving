@@ -1,10 +1,16 @@
-let members = [];
-let total = 0;
 
+    let members = [];
+let total = 0;
+let requests = [];
+
+let walletAddress = "";
+let requiredApprovals = 2;
+
+// ---------------- MEMBERS ----------------
 function addMember() {
     let name = document.getElementById("memberName").value;
 
-    if (name === "") return;
+    if (!name) return;
 
     members.push(name);
 
@@ -14,9 +20,8 @@ function addMember() {
 
     document.getElementById("memberName").value = "";
 }
-function scanWithdrawQR() {
-    alert("Withdrawal request opened. Members must approve.");
-}
+
+// ---------------- CONTRIBUTION ----------------
 function contribute() {
     let member = document.getElementById("memberList").value;
     let amount = parseFloat(document.getElementById("amount").value);
@@ -34,25 +39,13 @@ function contribute() {
     document.getElementById("amount").value = "";
 }
 
-let walletAddress = "GROUP_WALLET_123"; // simulated wallet
-
-function generateQR() {
-    new QRCode(document.getElementById("qrcode"), {
-        text: walletAddress,
-        width: 150,
-        height: 150
-    });
-}
-
-generateQR();
-let walletAddress = "";
-
+// ---------------- WALLET QR ----------------
 function createWallet() {
     walletAddress = document.getElementById("walletInput").value;
 
     if (!walletAddress) return;
 
-    document.getElementById("qrcode").innerHTML = ""; // reset QR
+    document.getElementById("qrcode").innerHTML = "";
 
     new QRCode(document.getElementById("qrcode"), {
         text: walletAddress,
@@ -61,33 +54,8 @@ function createWallet() {
     });
 }
 
-function deposit(amount, member) {
-    total += amount;
-    document.getElementById("total").innerText = total;
-
-    let li = document.createElement("li");
-    li.textContent = member + " deposited " + amount + " BTC";
-
-    document.getElementById("transactions").appendChild(li);
-}
-
-let requests = [];
-
+// ---------------- WITHDRAW REQUEST ----------------
 function requestWithdrawal() {
-    let amount = document.getElementById("amount").value;
-
-    let request = {
-        amount: amount,
-        approvals: 0
-    };
-
-    requests.push(request);
-}
-
-function requestWithdrawal() {
-    let walletAddress = "GROUP_WALLET_123";
-let withdrawRequestId = "WITHDRAW_REQUEST_SYSTEM";
-    let requiredApprovals = 2; // 2-of-N system
     let amount = parseFloat(document.getElementById("withdrawAmount").value);
     let member = document.getElementById("memberList").value;
 
@@ -104,11 +72,11 @@ let withdrawRequestId = "WITHDRAW_REQUEST_SYSTEM";
     displayRequests();
 }
 
+// ---------------- APPROVAL (MULTISIG SIMULATION) ----------------
 function approveRequest(index) {
     let member = document.getElementById("memberList").value;
     let req = requests[index];
 
-    // Prevent same person approving twice
     if (req.approvedBy.includes(member)) {
         alert("You already approved this request");
         return;
@@ -117,18 +85,19 @@ function approveRequest(index) {
     req.approvedBy.push(member);
     req.approvals++;
 
-    // Example: need 2 approvals
-    if (req.approvals >= 2) {
+    if (req.approvals >= requiredApprovals) {
         total -= req.amount;
         document.getElementById("total").innerText = total;
 
         alert("Withdrawal Approved!");
+
         requests.splice(index, 1);
     }
 
     displayRequests();
 }
 
+// ---------------- DISPLAY REQUESTS ----------------
 function displayRequests() {
     let list = document.getElementById("requestsList");
     list.innerHTML = "";
@@ -137,42 +106,20 @@ function displayRequests() {
         let li = document.createElement("li");
 
         li.innerHTML = `
-            ${req.requestedBy} requested ${req.amount} 
-            | Approvals: ${req.approvals}
+            <strong>${req.requestedBy}</strong> requests ${req.amount}<br>
+            Approvals (${req.approvals}/${requiredApprovals}): ${req.approvedBy.join(", ") || "None"}<br>
             <button onclick="approveRequest(${index})">Approve</button>
         `;
 
         list.appendChild(li);
     });
 }
+
+// ---------------- WITHDRAW QR ----------------
+let withdrawRequestId = "WITHDRAW_REQUEST_SYSTEM";
 
 new QRCode(document.getElementById("withdrawQR"), {
     text: withdrawRequestId,
     width: 150,
     height: 150
 });
-
-function displayRequests() {
-    let list = document.getElementById("requestsList");
-    list.innerHTML = "";
-
-    requests.forEach((req, index) => {
-        let li = document.createElement("li");
-
-        li.innerHTML = `
-            <strong>${req.requestedBy}</strong> requests ${req.amount}  
-            <br>
-            Approvals (${req.approvals}/2): ${req.approvedBy.join(", ") || "None"}
-            <br>
-            <button onclick="approveRequest(${index})">Approve</button>
-        `;
-
-        list.appendChild(li);
-    });
-}
-
-li.innerHTML = `
-    ${req.requestedBy} requests ${req.amount} BTC  
-    | Approvals: ${req.approvals}/${requiredApprovals}
-    <button onclick="approveRequest(${index})">Approve</button>
-`;
