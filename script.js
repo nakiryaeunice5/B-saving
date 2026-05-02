@@ -68,6 +68,8 @@ function requestWithdrawal() {
 }
 
 function requestWithdrawal() {
+    let walletAddress = "GROUP_WALLET_123";
+let withdrawRequestId = "WITHDRAW_REQUEST_SYSTEM";
     let requiredApprovals = 2; // 2-of-N system
     let amount = parseFloat(document.getElementById("withdrawAmount").value);
     let member = document.getElementById("memberList").value;
