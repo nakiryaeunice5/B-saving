@@ -32,6 +32,28 @@ function contribute() {
     document.getElementById("amount").value = "";
 }
 
+let walletAddress = "GROUP_WALLET_123"; // simulated wallet
+
+function generateQR() {
+    new QRCode(document.getElementById("qrcode"), {
+        text: walletAddress,
+        width: 150,
+        height: 150
+    });
+}
+
+generateQR();
+
+function deposit(amount, member) {
+    total += amount;
+    document.getElementById("total").innerText = total;
+
+    let li = document.createElement("li");
+    li.textContent = member + " deposited " + amount + " BTC";
+
+    document.getElementById("transactions").appendChild(li);
+}
+
 let requests = [];
 
 function requestWithdrawal() {
