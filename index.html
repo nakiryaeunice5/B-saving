@@ -19,14 +19,15 @@
 <select id="memberList"></select>
 <input type="number" id="amount" placeholder="Amount">
 <button onclick="contribute()">Save</button>
-    <h3>Enter Group Wallet Address</h3>
-
+    <h3>Group Wallet Address</h3>
 <input type="text" id="walletInput" placeholder="Enter wallet address">
 <button onclick="createWallet()">Generate QR</button>
 
+<div id="qrcode"></div>
 
+<hr>
 
-    <h3>Confirm Deposit (Simulation)</h3>
+ <h3>Confirm Deposit (Simulation)</h3>
 <input type="number" id="depositAmount" placeholder="Amount">
 <button onclick="confirmDeposit()">Confirm</button>
 
