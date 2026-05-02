@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Savings Group</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<h1>💰 Digital Savings Group</h1>
+
+<h3>Add Member</h3>
+<input type="text" id="memberName" placeholder="Enter name">
+<button onclick="addMember()">Add</button>
+
+<h3>Make Contribution</h3>
+<select id="memberList"></select>
+<input type="number" id="amount" placeholder="Amount">
+<button onclick="contribute()">Save</button>
+
+<h3>Total Savings</h3>
+<p id="total">0</p>
+
+<h3>Transactions</h3>
+<ul id="transactions"></ul>
+
+<h4>Wallet Address</h4>
+<input type="text" id="wallet" placeholder="Enter BTC address">
+
+<h4>Wallet Balance (BTC)</h4>
+<p id="btcBalance">0</p>
+
+<h5>Request Withdrawal</h5>
+<input type="number" id="withdrawAmount" placeholder="Amount">
+<button onclick="requestWithdrawal()">Request</button>
+
+<p><strong>Note:</strong> Withdrawals require group approval. No single member can access funds directly.</p>
+
+<h5>Pending Requests</h5>
+<ul id="requestsList"></ul>
+<script src="script.js"></script>
+</body>
+</html>
