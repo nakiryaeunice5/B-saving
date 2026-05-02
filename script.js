@@ -127,6 +127,12 @@ function displayRequests() {
     });
 }
 
+new QRCode(document.getElementById("withdrawQR"), {
+    text: withdrawRequestId,
+    width: 150,
+    height: 150
+});
+
 function displayRequests() {
     let list = document.getElementById("requestsList");
     list.innerHTML = "";
