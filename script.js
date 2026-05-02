@@ -93,6 +93,16 @@ function approveRequest(index) {
 
         requests.splice(index, 1);
     }
+    if (req.approvals >= requiredApprovals) {
+    total -= req.amount;
+    document.getElementById("total").innerText = total;
+
+    alert("All approvals complete! Generating withdrawal QR...");
+
+    generateWithdrawQR(req); // 👈 ONLY NOW generate QR
+
+    requests.splice(index, 1);
+}
 
     displayRequests();
 }
@@ -116,10 +126,18 @@ function displayRequests() {
 }
 
 // ---------------- WITHDRAW QR ----------------
-let withdrawRequestId = "WITHDRAW_REQUEST_SYSTEM";
+function generateWithdrawQR(req) {
+    document.getElementById("withdrawQR").innerHTML = "";
 
-new QRCode(document.getElementById("withdrawQR"), {
-    text: withdrawRequestId,
-    width: 150,
-    height: 150
-});
+    let qrData = {
+        amount: req.amount,
+        requestedBy: req.requestedBy,
+        approvals: req.approvedBy
+    };
+
+    new QRCode(document.getElementById("withdrawQR"), {
+        text: JSON.stringify(qrData),
+        width: 150,
+        height: 150
+    });
+}
