@@ -45,6 +45,21 @@ function generateQR() {
 }
 
 generateQR();
+let walletAddress = "";
+
+function createWallet() {
+    walletAddress = document.getElementById("walletInput").value;
+
+    if (!walletAddress) return;
+
+    document.getElementById("qrcode").innerHTML = ""; // reset QR
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: walletAddress,
+        width: 150,
+        height: 150
+    });
+}
 
 function deposit(amount, member) {
     total += amount;
