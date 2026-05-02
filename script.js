@@ -14,7 +14,9 @@ function addMember() {
 
     document.getElementById("memberName").value = "";
 }
-
+function scanWithdrawQR() {
+    alert("Withdrawal request opened. Members must approve.");
+}
 function contribute() {
     let member = document.getElementById("memberList").value;
     let amount = parseFloat(document.getElementById("amount").value);
