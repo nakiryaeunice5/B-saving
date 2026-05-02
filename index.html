@@ -4,6 +4,7 @@
 <head>
     <title>Digital Savings Group</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 </head>
 <body>
@@ -18,6 +19,11 @@
 <select id="memberList"></select>
 <input type="number" id="amount" placeholder="Amount">
 <button onclick="contribute()">Save</button>
+    <h3>Group Wallet Address</h3>
+<p id="walletAddress">GROUP_WALLET_123</p>
+
+<h3>Scan to Deposit</h3>
+<div id="qrcode"></div>
 
 <h3>Total Savings</h3>
 <p id="total">0</p>
@@ -25,8 +31,7 @@
 <h3>Transactions</h3>
 <ul id="transactions"></ul>
 
-<h4>Wallet Address</h4>
-<input type="text" id="wallet" placeholder="Enter BTC address">
+
 
 <h4>Wallet Balance (BTC)</h4>
 <p id="btcBalance">0</p>
